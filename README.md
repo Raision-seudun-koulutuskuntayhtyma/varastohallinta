@@ -1,0 +1,2 @@
+# Varastohallinta
+Varasohallintasovelluksen suunnitteluaineistot löytyvät täältä
