@@ -1,4 +1,4 @@
 # Varastonhallinta
 Varastonhallintasovelluksen suunnitteluaineistot löytyvät täältä.
 
-![infrastruktuurikaavio](Infrastruktuurikaavio.png)
+![infrastruktuurikaavio](./Infrastruktuurikaavio.png)
