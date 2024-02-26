@@ -1,0 +1,169 @@
+{% comment %} <div class="pagination">
+    <span class="step-links">
+        <a href="?page=1"><button class="list__button list__button_bg_blue btn_strech"><span class="bi bi-chevron-double-left font-size"></span></button></a>
+        <a href="{% if items.has_previous %}?page={{ items.previous_page_number }}{% endif %}"><button class="list__button list__button_bg_blue btn_strech"><span class="bi bi-chevron-left font-size"></span></button></a>
+        
+        <span class="current">
+            Sivu {{ items.number }} / {{ items.paginator.num_pages }}
+        </span>
+
+        <a href="{% if items.has_next %}?page={{ items.next_page_number }}{% endif %}"><button class="list__button list__button_bg_blue btn_strech"><span class="bi bi-chevron-right font-size"></span></button></a>
+        <a href="?page={{ items.paginator.num_pages }}"><button class="list__button list__button_bg_blue btn_strech"><span class="bi bi-chevron-double-right font-size"></span></button></a>
+    </span>
+</div> {% endcomment %}
+
+<div class="pagination">
+    <span class="step-links">
+        <a href="?page=1"><button class="list__button list__button_bg_blue btn_strech"><span class="bi bi-chevron-double-left font-size"></span></button></a>
+        <a href="{% if items.has_previous %}?page={{ items.previous_page_number }}{% endif %}"><button class="list__button list__button_bg_blue btn_strech"><span class="bi bi-chevron-left font-size"></span></button></a>
+        
+        <span class="current">
+            Sivu {{ items.number }} / {{ items.paginator.num_pages }}
+        </span>
+
+        <a href="{% if items.has_next %}?page={{ items.next_page_number }}{% endif %}"><button class="list__button list__button_bg_blue btn_strech"><span class="bi bi-chevron-right font-size"></span></button></a>
+        <a href="?page={{ items.paginator.num_pages }}"><button class="list__button list__button_bg_blue btn_strech"><span class="bi bi-chevron-double-right font-size"></span></button></a>
+    </span>
+</div>
+
+<div class="columns_name">
+
+    <div class="row02">
+        <div>
+            <span>Tuote</span>
+        </div>
+    </div>
+    
+    <div class="row01">
+        <div>
+            <span>ID / Tuotenumero</span>
+        </div>
+    </div>
+
+    <div class="row01">
+        <div>
+            <span>Tuotepaikka</span>
+        </div>
+    </div>
+    
+    <div class="row01">
+        <div>
+            <span>EAN</span>
+        </div>
+    </div>
+    
+    <div class="row01">
+        <div>
+            <span>Saatavuus</span>
+        </div>
+    </div>
+
+    <div class="row01">
+        <div>
+            <span>Arvioitu Palautuspäivä</span>
+        </div>
+    </div>
+    
+    <div class="row01">
+        <div>
+            <span></span>
+        </div>
+    </div>
+</div>
+
+{% for item in items %}
+
+<div class="new_event_wrap">
+
+    <div class="row01">
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="chekbox{{item.id}}" {% if item.rentable_at %}disabled{% endif %}>
+          </div>
+    </div>
+
+    
+
+    <div class="row02">
+        <div class="item_name">
+            <span class="header" for="chekbox{{item.id}}">{{item.item_name}} {{item.brand}}</span>
+            <span class="paragraph" for="chekbox{{item.id}}">{{item.model|default_if_none:""}} {{item.item_type|default_if_none:""}} {{item.parameters|default_if_none:""}} {{item.size|default_if_none:""}} {{item.package|default_if_none:""}}</span>
+            {% comment %} {{forloop.counter}} {% endcomment %}
+        </div>
+    </div>
+
+    <div class="row01">
+        <div class="">
+            <span class="code_number">{{item.id}}</span>
+        </div>
+    </div>
+
+    <div class="row01">
+        <div class="">
+            <span class="code_number">{{item.storage_place}}</span>
+        </div>
+    </div>
+
+    <div class="row01">
+        <div class="">
+            <span class="EAN_number">{{item.ean}}</span>
+        </div>
+    </div>
+
+    <div class="row01">
+        <div class="item_status">
+            {% comment %} {% if item.item_status != 'available'  %} {% endcomment %}
+            {% if item.rentable_at and item.cat_name_id != CATEGORY_CONSUMABLES_ID %}
+            <span class="status_red">Ei saatavilla</span>
+            {% else %}
+            <span class="status_green">Saatavilla</span>
+            {% endif %} 
+        </div>
+    </div>
+
+    <div class="row01">
+        <div class="">
+            {% if item.cat_name_id != CATEGORY_CONSUMABLES_ID %}
+            <span class="est_date">{{ item.rentable_at|date:'d.m.Y' }}</span>
+            {% else %}
+            <span class="est_date">{{ item.amount }} pakkausta,</span>
+            <span class="est_date">{{ item.amount_x_contents|normalize_dec }} {{ item.unit }} yhteensä</span>
+            {% endif %} 
+        </div>
+    </div>
+    {% comment %} !!!!!!!!!!!!!!!!!!!! item.item_status исправить на rentable_at {% endcomment %}
+    <div class="row01">
+        <button type="button" class="button_props {% if item.item_status == 'available' %}button_active{% else %}button_inactive{% endif %}">
+            <span class="button__text">Valitse</span>
+        </button>
+    </div>
+</div>
+{% endfor %}
+
+<div class="pagination">
+    <span class="step-links">
+        <a href="?page=1"><button class="list__button list__button_bg_blue btn_strech"><span class="bi bi-chevron-double-left font-size"></span></button></a>
+        <a href="{% if items.has_previous %}?page={{ items.previous_page_number }}{% endif %}"><button class="list__button list__button_bg_blue btn_strech"><span class="bi bi-chevron-left font-size"></span></button></a>
+        
+        <span class="current">
+            Sivu {{ items.number }} / {{ items.paginator.num_pages }}
+        </span>
+
+        <a href="{% if items.has_next %}?page={{ items.next_page_number }}{% endif %}"><button class="list__button list__button_bg_blue btn_strech"><span class="bi bi-chevron-right font-size"></span></button></a>
+        <a href="?page={{ items.paginator.num_pages }}"><button class="list__button list__button_bg_blue btn_strech"><span class="bi bi-chevron-double-right font-size"></span></button></a>
+    </span>
+</div>
+
+
+{% comment %} <div class="pagination">
+    <span class="step-links">
+        <a href="?page=1"><button class="list__button list__button_bg_blue btn_strech"><span class="bi bi-chevron-double-left font-size"></span></button></a>
+        <a href="{% if items.has_previous %}?page={{ items.previous_page_number }}{% endif %}"><button class="list__button list__button_bg_blue btn_strech"><span class="bi bi-chevron-left font-size"></span></button></a>
+        
+        <span class="current">
+            Sivu {{ items.number }} / {{ items.paginator.num_pages }}
+        </span>
+
+        <a href="{% if items.has_next %}?page={{ items.next_page_number }}{% endif %}"><button class="list__button list__button_bg_blue btn_strech"><span class="bi bi-chevron-right font-size"></span></button></a>
+        <a href="?page={{ items.paginator.num_pages }}"><button class="list__button list__button_bg_blue btn_strech"><span class="bi bi-chevron-double-right font-size"></span></button></a>
+    </span>
+</div> {% endcomment %}

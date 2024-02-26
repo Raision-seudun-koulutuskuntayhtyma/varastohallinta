@@ -1,0 +1,300 @@
+.main_container {
+    display: grid; 
+    grid-template-columns: 280px 1fr 1fr 1fr; 
+    grid-template-rows: 105px 1fr; 
+    gap: 0px 0px; 
+    grid-template-areas: 
+      "Header Header Header Header"
+      "aside main main main"
+      "aside main main main";
+	/* max-width: 1600px; */
+	margin: 0 auto;
+    height: 100%;
+    /* border: 1px solid green; */
+    background-color: #F2F2F2;
+    color: #2D3748;
+    font-family: rubik;
+    font-size: 16px;
+    min-width: 1200px;
+}
+    /* .container_grid_wide{
+        grid-template-columns: 280px 1fr 1fr 1fr; 
+    }
+    .container_grid_thin{
+        grid-template-columns: 100px 1fr 1fr 1fr; 
+    } */
+
+    header { 
+        grid-area: Header;
+        padding: 1em;
+    }
+    aside { 
+        grid-area: aside;
+        padding: 0em 0.5em 1em 1em; /* Aside oikealla 0.5em ja Main väsemällä 0.5em */
+        }
+    main { 
+        grid-area: main;
+        padding: 0em 1em 1em 0.5em; /* Aside oikealla 0.5em ja Main väsemällä 0.5em */
+    }
+
+    header, aside, main {
+        /* border: 1px solid red; */
+    }
+
+    .white_background {
+        background-color: white;
+        border-radius: 3px;
+        height: 100%;
+        padding: 0.5em;
+        
+    }
+    main .white_background {
+        /* overflow-y: scroll; */
+        overflow-y: auto;
+        overflow-x: auto;
+        scrollbar-gutter: stable;
+    }
+
+
+/* ----HEADER---- */
+header .warp {
+    display: grid;
+    grid-template-columns: 20em 1fr 1fr 1fr;
+    border-radius: 3px;
+    width: 100%;
+    height: 100%;
+    /* border: 1px solid red; */
+}
+    /* header .warp > div {
+        place-self: center stretch;
+        justify-self: start;
+        border: 1px solid green;
+        padding-left: 10px;
+        font-size: 1.5em;
+        display: grid;
+        grid-template-columns: 1fr 4fr;
+        gap: 10px;
+        justify-content: space-between;
+    } */
+    header .warp > div {
+        place-self: center stretch;
+        /* justify-self: start; */
+        /* border: 1px solid green; */
+    }
+    .search form {
+        display: inline-flex;        
+        width: 100%;
+        min-width: 20em;
+        /* border: 1px solid red; */
+    }
+
+    .logos {
+        font-size: 1.5em;
+    }
+
+    .logos_burger {
+        display: flex;
+        align-items: center;
+    }
+
+    .logos_burger:hover {
+        background-color: #dedede;
+        cursor: pointer;
+    }
+
+    .logos > div {
+        display: flex;
+        flex-direction: column;
+        /* border: 1px solid red; */
+    }
+    
+    .logos .storage{
+        font-size: 0.65em;
+    }
+    .account {
+        display: flex;
+        flex-direction: column;
+        justify-content: end;
+    }
+    .account span {
+        text-align: right;
+    }
+    .account a, .account a:hover, .account a:visited, .account span {
+        text-decoration: none;
+        color: #718096;
+    }
+    .page_name {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+    }
+    .page_name span {
+        text-align: left;
+    }
+    .page_name span:nth-child(1) {
+        font-size: 0.9em;
+        font-weight: 400;
+    }
+    .page_name span:nth-child(2) {
+        font-size: 1.5em;
+        font-weight: 700;
+    }
+
+    .item_left {
+        display: flex;
+        justify-content: start;
+    }
+    .item_right {
+        display: flex;
+        justify-content: end;
+    }
+
+    .image {
+        max-width: 7em;
+        height: auto;
+    }
+    header .warp > div span {
+        padding-left: 10px;
+        padding-right: 10px;
+        /* border: 1px solid red;  */
+    }
+    
+/* /----HEADER---- */
+
+
+/* ----MENU---- */
+.button {
+    display: inline-flex;
+    height: 55px;
+    padding: 0;
+    border: none;
+    outline: none;
+    border-radius: 3px;
+    overflow: hidden;
+    font-family: 'rubik';
+    font-size: 1em;
+    font-weight: 400;
+    cursor: pointer;
+    /* border: 1px solid red */
+}
+.button_bg_green {
+    color: white;
+    background: #24A19C;
+}
+.button_bg_red {
+    color: white;
+    background: #D96098;
+}
+.button_bg_blue {
+    color: white;
+    background: #325288;
+}
+.button_bg_light_green {
+    color: 2D3748;
+    background: #ebebeb;
+}
+.button_bg_gray { /* active button*/
+    color: #2D3748 !important;
+    background: #ebebeb !important;
+}
+.button_bg_white { /* inactive button*/
+    color: #2D3748;
+    background: white;
+}
+.button:hover{
+    filter: opacity(85%);
+}
+.button:active{
+    filter: opacity(60%);
+}
+.button__text {
+    display: inline-flex;
+    align-items: center;
+    padding: 0 18px;
+    height: 100%;
+}
+.button__text_main_menu {
+    display: inline-flex;
+    align-items: center;
+    padding: 0 18px;
+    height: 100%;
+}
+.button__icon {
+    display: inline-flex;
+    align-items: center;
+    padding: 0 18px;
+    height: 100%;
+}
+
+.border1 {
+    border-top: #ebebeb solid 2px;
+    border-bottom: #ebebeb solid 2px;
+    border-left: #ebebeb solid 2px;
+}
+
+.button__icon{
+    font-size: 1.5em;
+    background: rgba(0, 0, 0, 0.08);
+}
+.button__icon i {
+    font-size: 1rem;
+}
+
+.button__i{
+    display: inline-flex;
+    align-items: center;
+    padding: 0 20px;
+    height: 100%;
+    font-size: 1.2em;
+    background: rgba(0, 0, 0, 0.08);
+    /* border: 1px solid red */
+}
+
+.resize {
+    width: 100%;
+}
+
+.nodecor, .nodecor:hover, .nodecor:active, .nodecor:visited{
+    text-decoration: none;
+}
+
+/* /----MENU---- */
+
+
+
+/* ----MAIN---- */
+
+/* scrolbar */
+#wb::-webkit-scrollbar, body::-webkit-scrollbar {
+    width: 0.4em;
+    height: 0.4em;
+    cursor: pointer;
+  }
+   
+    #wb::-webkit-scrollbar-track, body::-webkit-scrollbar-track {
+        box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.3);
+        border-radius: 1em;
+        /* background-color:#CBD5E0; */
+    }
+
+    #wb::-webkit-scrollbar-thumb, body::-webkit-scrollbar-thumb{
+        border-radius: 1em;
+        background-color: darkgrey;
+        /* outline: 1px solid slategrey; */
+    }
+    #wb:hover::-webkit-scrollbar-thumb, main:hover::-webkit-scrollbar-thumb {
+        /* background-color: blue; */
+        cursor: pointer;
+    }
+
+
+/* modal fade speed */
+.fade {
+    /* opacity: 0;
+    -webkit-transition: opacity 0.25s linear;
+    -moz-transition: opacity 0.25s linear;
+    -ms-transition: opacity 0.25s linear;
+    -o-transition: opacity 0.25s linear; */
+    transition: opacity 0.04s linear !important;
+    }
+/* /----MAIN---- */

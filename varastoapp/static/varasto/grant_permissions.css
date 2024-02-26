@@ -1,0 +1,178 @@
+.sort{
+    display: flex;
+    justify-content: end;
+    padding: 5px; 
+    margin-bottom: 1.5em;
+    /* border: 1px solid blue; */
+}
+
+.sort > div {
+    padding-right: 2em;
+}
+
+/* ITEM LIST */
+
+.list a {
+    color: inherit;
+    text-decoration: none;
+}
+.list a:hover {
+    color:#325288;
+}
+
+.list__item {
+    display: grid;
+    grid-template-columns: 60px 1.5fr 1fr 1fr 0.5fr;
+    padding: 5px; 
+    /* border: 1px solid blue; */
+}
+
+.brd_top {
+    padding-top: 1em;
+    border-top: 1px solid #E2E8F0;
+}
+
+
+.list__item > div {
+    /* !!!!!!!!!!!!!!!!!!!!!!!!!! */
+    /* border: 1px solid red;  */
+    place-self: center stretch;
+}
+
+/* .list__item_photo{
+    display: flex;
+    justify-content: center;
+} */
+
+.list__item_photo > div{
+    overflow: hidden;
+    width: 50px;
+    height: 50px;
+    border-radius: 0.7em;
+    
+}
+.list__item_photo img {
+    width: 50px;
+    height: 50px;
+    object-fit:cover;
+    /* object-position: -38px 10%; */
+    object-position: 50% 50%; /* kuva keskellä */
+}
+
+
+.list__item_student, .list__item_group {
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+}
+
+.list__item_student span {
+    padding-left: 1em;
+    text-align: left;
+}
+
+.list__item_group span {
+    text-align: center;
+}
+.list__item_student span:nth-child(1), .list__item_group span:nth-child(1){
+    font-size: 1em;
+    font-weight: 500;
+    color: #2D3748;
+}
+.list__item_student span:nth-child(2), .list__item_group span:nth-child(2){
+    font-size: 0.875em;
+    font-weight: 400;
+    color: #718096;
+}
+
+.list__item_role, .list__item_button{
+    display: flex;
+    justify-content: center;
+}
+
+
+/* PAGINATION */
+.pagination{
+    display: flex;
+    justify-content: center;
+    color: #2D3748;
+    /* border: 1px solid red; */
+}
+.pagination a, .pagination a:hover, .pagination a:visited, .pagination a:active {
+    text-decoration: none;
+    color: #FFFFFF;
+}
+.step-links {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.875em;
+}
+.current {
+    width: 10em;
+    text-align: center;
+    /* border: 1px solid red; */
+}
+/* // PAGINATION*/
+
+
+/* BUTTON IN LIST */
+.list__button {
+    display: inline-flex;
+    height: 39px;
+    padding: 0;
+    border: none;
+    outline: none;
+    border-radius: 3px;
+    overflow: hidden;
+    font-family: 'rubik';
+    font-size: 1em;
+    font-weight: 400;
+    cursor: pointer;
+    justify-content: center;
+    
+}
+
+    .button_link, .button_link:hover, .button_link:visited {
+        text-decoration: none;
+        /* border: 1px solid blue; */
+    }
+
+    .btn_strech {
+        place-self: center stretch;
+    }
+    
+
+    .list__button__text {
+        display: inline-flex;
+        align-items: center;
+        padding: 0 24px;
+        height: 100%;
+        /* border: 1px solid blue; */
+    }
+    .list__button_bg_green {
+        color: white;
+        background: #325288;
+    }
+    .list__button_bg_white {
+        background: white;
+    }
+    .list__collapse button div {
+        display: inline-flex;
+        align-items: center;
+        padding: 0 24px;
+        height: 100%;
+    }
+    .list__button_bg_blue {
+        color: white;
+        background: #325288;
+    }
+    .font-size{
+        font-size: 1em;
+        padding: 0 0.9em;
+    }
+    .list__button span {
+        display: inline-flex;
+        align-items: center;
+        height: 100%;
+    }

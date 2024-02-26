@@ -1,0 +1,136 @@
+{% extends "varasto/base.html" %}
+
+{% load static %}
+
+{% block script %}
+{% endblock %}
+
+{% block content %}
+
+<div class="main_container">
+    <header>
+        <div class="warp">
+            <div class="logos item_left">
+                <span class="logos_burger">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
+                    </svg>
+                </span>
+                <div>
+                    <span><img class="image" src="{% static 'varasto/pics/varasto_logo.png' %}" alt="varasto_logo.png"></span>
+                    {% if user.storage %}<span class="storage">{{ user.storage }}</span>{% endif %}
+                </div>
+            </div>
+            <div class="page_name item_left">
+                {% comment %} <span>Kotisivu / Vuokraaminen</span> {% endcomment %}
+                {% comment %} <span>Vuokraaminen</span> {% endcomment %}
+                <span>Kotisivu / {% block path %}{% endblock %}</span>
+                <span>{% block page %}{% endblock %}</span>
+            </div>
+            <div class="search">
+                <!-- <form action="" method="get">
+                    <input name="search_form" type="text" class="form-control size" placeholder="Hae opiskelijoita tai tavaroita">
+                    <button class="btn btn-secondary">
+                        <i class="bi bi-search"></i>
+                    </button>  
+                </form> -->
+            </div>
+            <div class="account item_right">
+                <span>
+                    <a href="{% url 'logout' %}">
+                    {% if user.first_name %}
+                        {{ user.first_name }} {{ user.last_name }} 
+                    {% else %}
+                        {{ user.username }}
+                    {% endif %}
+                    logout
+                    </a>
+                </span>
+                <span><a href="{% url 'logout' %}">{{user.role}}</a></span>
+                <span>{{datenow|date:'d.m.Y'}}</span>
+            </div>
+        </div>
+    </header>
+
+    <aside>
+        <div class="white_background">
+            <nav>
+                <a class="nodecor" href="{% url 'new_event' %}">
+                    <button type="button" class="button resize mb-2 {% if '/new_event/' in request.path %}button_bg_light_green{% else %}button_bg_green{% endif %}">
+                        <span class="button__text_main_menu resize">Uusi tapahtuma</span>
+                        <span class="bi bi-plus-lg button__i"></span>
+                    </button>
+                </a>
+                {% comment %} {% if user.role == 'management' %} {% endcomment %}
+                <a class="nodecor" href="{% url 'new_item' %}">
+                    <button type="button" class="button resize mb-2 {% if '/new_item/' in request.path %}button_bg_light_green{% else %}button_bg_green{% endif %}">
+                        <span class="button__text_main_menu resize">Uusi tavara</span>
+                        <span class="bi bi-plus-lg button__i"></span>
+                    </button>
+                </a>
+                {% comment %} {% endif %} {% endcomment %}
+                {% comment %} <a class="nodecor" href="{% if get_rental_events_page %}{% url get_rental_events_page %}{% else %}{% url 'rental_events' %}{% endif %}"> {% endcomment %}
+                <a class="nodecor" href="{% url rental_events_page %}">
+                    <button type="button" class="button resize mb-2 {% if '/rental_events_goods/' in request.path or '/rental_events/' in request.path or '/renter/' in request.path %}button_bg_gray{% else %}button_bg_white{% endif %}">
+                        <span class="button__text_main_menu resize border1">Vuokratapahtumat</span>
+                        <span class="bi bi-card-list button__i"></span>
+                    </button>
+                </a>
+                <a class="nodecor" href="{% url 'products' %}">
+                    <button type="button" class="button resize mb-2 {% if '/products/' in request.path or '/product/' in request.path %}button_bg_gray{% else %}button_bg_white{% endif %}">
+                        <span class="button__text_main_menu resize border1">Tavarat</span>
+                        <span class="bi bi-shop-window button__i"></span>
+                    </button>
+                </a>
+                {% if user.is_staff %}
+                <a class="nodecor" href="{% url 'new_user' %}">
+                    <button type="button" class="button resize mb-2 {% if request.path == '/new_user/' %}button_bg_gray{% else %}button_bg_white{% endif %}">
+                        <span class="button__text_main_menu resize border1">Uusi käyttäjä</span>
+                        <span class="bi bi-person-plus button__i"></span>
+                    </button>
+                </a>
+                {% endif %}
+                {% if user.is_staff %}
+                <a class="nodecor" href="{% url 'grant_permissions' %}">
+                    <button type="button" class="button resize mb-2 {% if request.path == '/grant_permissions/' %}button_bg_gray{% else %}button_bg_white{% endif %}">
+                        <span class="button__text_main_menu resize border1">Oikeudet</span>
+                        <span class="bi bi-shield-exclamation button__i"></span>
+                    </button>
+                </a>
+                {% endif %}
+                <a class="nodecor" href="{% url 'inventory' %}">
+                    <button type="button" class="button resize mb-2 {% if request.path == '/inventory/' %}button_bg_gray{% else %}button_bg_white{% endif %}">
+                        <span class="button__text_main_menu resize border1">Inventaario</span>
+                        <span class="bi bi-bank button__i"></span>
+                    </button>
+                </a>
+                <a class="nodecor" href="{% url 'storage_settings' %}">
+                    <button type="button" class="button button_bg_white resize mb-2">
+                        <span class="button__text_main_menu resize border1">Asetukset</span>
+                        <span class="bi bi-gear button__i"></span>
+                    </button>
+                </a>
+                {% if user.is_staff %}
+                <a class="nodecor" href="{% url 'admin:index' %}" target="_blank">
+                    <button type="button" class="button button_bg_white resize mb-2">
+                        <span class="button__text_main_menu resize border1">Administration</span>
+                        <span class="bi bi-key button__i"></span>
+                    </button>
+                </a>
+                {% endif %}
+            </nav>
+        </div>
+    </aside>
+
+
+    <main>
+        <div class="white_background" id="wb">
+            {% block main_content %}
+            
+            {% endblock %}
+        </div>
+    </main>
+</div>
+
+
+{% endblock %}
