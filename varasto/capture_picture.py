@@ -2,6 +2,8 @@ import cv2
 import numpy as np
 import os
 from pathlib import Path
+
+# TODO: Poista VideoCamera-luokka, koska se on käyttämätön (dead code)
 class VideoCamera(object):
     def __init__(self):
         self.cap = cv2.VideoCapture(0)
@@ -14,6 +16,8 @@ class VideoCamera(object):
         return frame.tobytes()
 
     def take(self):
+        # TODO: Korjaa (tai poista) kuvan tallentamisen koodi alta
+        # (käyttää väärin kovakoodattuja polkuja)
         path = './varastoapp/static/images/'
         print(path)
         ret, frame = self.cap.read()

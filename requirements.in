@@ -5,7 +5,6 @@ django-widget-tweaks
 djangorestframework
 gunicorn
 Markdown
-opencv-python
 pillow
 psycopg2
 python-barcode
