@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 import os
 from pathlib import Path
-from django.conf.global_settings import DEFAULT_FROM_EMAIL
 
 import environ
 
@@ -25,6 +24,7 @@ env = environ.Env(
     DATABASE_URL=(str, f"postgres:///varasto"),
     EMAIL_URL=(str, "consolemail:"),
     DEFAULT_FROM_EMAIL=(str, "varasto@localhost"),
+    STATIC_ROOT=(str, BASE_DIR / "static"),
 )
 env.read_env(BASE_DIR / ".env")
 
@@ -42,6 +42,8 @@ EMAIL_PORT = env.email("EMAIL_URL")["EMAIL_PORT"]
 EMAIL_HOST_USER = env.email("EMAIL_URL")["EMAIL_HOST_USER"]
 EMAIL_HOST_PASSWORD = env.email("EMAIL_URL")["EMAIL_HOST_PASSWORD"]
 DEFAULT_FROM_EMAIL = env.str("DEFAULT_FROM_EMAIL")
+
+STATIC_ROOT = env.str("STATIC_ROOT")
 
 # Application definition
 INSTALLED_APPS = [
