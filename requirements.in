@@ -3,6 +3,7 @@ django-environ
 django-filter
 django-widget-tweaks
 djangorestframework
+gunicorn
 Markdown
 opencv-python
 pillow

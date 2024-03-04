@@ -19,12 +19,16 @@ django-widget-tweaks==1.5.0
     # via -r requirements.in
 djangorestframework==3.14.0
     # via -r requirements.in
+gunicorn==21.2.0
+    # via -r requirements.in
 markdown==3.5.2
     # via -r requirements.in
 numpy==1.26.4
     # via opencv-python
 opencv-python==4.9.0.80
     # via -r requirements.in
+packaging==23.2
+    # via gunicorn
 pillow==10.2.0
     # via -r requirements.in
 psycopg2==2.9.9
