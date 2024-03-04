@@ -1,5 +1,4 @@
-from .keys import *
-
+from django.conf import settings
 
 # ITEMES_LETTER_CODE = 'A'
 
@@ -40,10 +39,9 @@ PRODUCT_IMG_PATH = 'images/goods/'
 # ====================================================
 # Email consts
 
-STORAGE_EMAIL = EMAIL_FROM_KEY
-EMAIL_PASS = EMAIL_PASS_FROM_KEY
-EMAIL_SERVER = "smtp.gmail.com"
-
+STORAGE_EMAIL = settings.DEFAULT_FROM_EMAIL
+EMAIL_PASS = settings.EMAIL_HOST_PASSWORD
+EMAIL_SERVER = settings.EMAIL_HOST
 
 # MESSAGE TEMPLATE
 class Email_msg:

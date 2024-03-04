@@ -11,23 +11,37 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 import os
 from pathlib import Path
-from varasto.keys import *
+from django.conf.global_settings import DEFAULT_FROM_EMAIL
+
+import environ
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+env = environ.Env(
+    DEBUG=(bool, True),
+    SECRET_KEY=(str, ""),
+    ALLOWED_HOSTS=(list, []),
+    DATABASE_URL=(str, f"postgres:///varasto"),
+    EMAIL_URL=(str, "consolemail:"),
+    DEFAULT_FROM_EMAIL=(str, "varasto@localhost"),
+)
+env.read_env(BASE_DIR / ".env")
 
 # Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
+# See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = DJ_SECRET_KEY
+DEBUG = env.bool("DEBUG")
+SECRET_KEY = env.str("SECRET_KEY", default=("xxx" if DEBUG else ""))
+ALLOWED_HOSTS = env.list("ALLOWED_HOSTS")
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = ['*']
-
+EMAIL_BACKEND = env.email("EMAIL_URL")["EMAIL_BACKEND"]
+EMAIL_FILE_PATH = env.email("EMAIL_URL")["EMAIL_FILE_PATH"]
+EMAIL_HOST = env.email("EMAIL_URL")["EMAIL_HOST"]
+EMAIL_PORT = env.email("EMAIL_URL")["EMAIL_PORT"]
+EMAIL_HOST_USER = env.email("EMAIL_URL")["EMAIL_HOST_USER"]
+EMAIL_HOST_PASSWORD = env.email("EMAIL_URL")["EMAIL_HOST_PASSWORD"]
+DEFAULT_FROM_EMAIL = env.str("DEFAULT_FROM_EMAIL")
 
 # Application definition
 INSTALLED_APPS = [
@@ -77,23 +91,7 @@ WSGI_APPLICATION = 'varastoapp.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
-DATABASES = {
-     'default': {
-         'ENGINE': 'django.db.backends.postgresql',
-         'HOST': HOST,
-         'PORT': PORT,
-         'USER': DATABASE_USER,
-         'PASSWORD': DATABASE_PASSWORD,
-         'NAME': DATABASE_NAME,
-     }
- }
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
+DATABASES = {"default": env.db("DATABASE_URL")}
 
 
 # Password validation
