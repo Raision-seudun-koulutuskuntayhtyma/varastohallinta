@@ -1,8 +1,9 @@
 # APP KEYS
 keys.py
 
-# Static
-/static/
+# Static and Media files (defaults for STATIC_ROOT and MEDIA_ROOT)
+/static
+/media
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

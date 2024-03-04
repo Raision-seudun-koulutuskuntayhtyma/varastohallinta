@@ -25,6 +25,7 @@ env = environ.Env(
     EMAIL_URL=(str, "consolemail:"),
     DEFAULT_FROM_EMAIL=(str, "varasto@localhost"),
     STATIC_ROOT=(str, BASE_DIR / "static"),
+    MEDIA_ROOT=(str, BASE_DIR / "media"),
 )
 env.read_env(BASE_DIR / ".env")
 
@@ -42,8 +43,6 @@ EMAIL_PORT = env.email("EMAIL_URL")["EMAIL_PORT"]
 EMAIL_HOST_USER = env.email("EMAIL_URL")["EMAIL_HOST_USER"]
 EMAIL_HOST_PASSWORD = env.email("EMAIL_URL")["EMAIL_HOST_PASSWORD"]
 DEFAULT_FROM_EMAIL = env.str("DEFAULT_FROM_EMAIL")
-
-STATIC_ROOT = env.str("STATIC_ROOT")
 
 # Application definition
 INSTALLED_APPS = [
@@ -129,12 +128,12 @@ USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/4.0/howto/static-files/
-
-STATIC_URL = 'varastoapp/static/'
-
-# STATIC_URL = 'static/'
-# STATIC_ROOT = 'static/'
+# and Media files (files updaled by user)
+# https://docs.djangoproject.com/en/4.2/howto/static-files/
+STATIC_URL = "static/"
+STATIC_ROOT = env.str("STATIC_ROOT")
+MEDIA_URL = "media/"
+MEDIA_ROOT = env.str("MEDIA_ROOT")
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
@@ -143,10 +142,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'varasto.CustomUser'
 LOGIN_URL = '/login/'
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'varastoapp/static/')
-# MEDIA_ROOT = os.path.join(BASE_DIR, 'static/')
-
-MEDIA_URL = '/images/'
-UPLOAD_IMG = '/upload_img/'
 
 # PRODUCT_IMG_PATH = 'images/goods/'
