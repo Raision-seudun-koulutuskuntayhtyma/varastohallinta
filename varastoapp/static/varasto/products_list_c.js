@@ -1,4 +1,4 @@
-function list_el_f(item, static_url, CATEGORY_CONSUMABLES_ID){
+function list_el_f(item, CATEGORY_CONSUMABLES_ID){
     const d = new Date(item.is_possible_to_rent_field)
     let date = d.getDate()
     let month = d.getMonth()
@@ -6,7 +6,7 @@ function list_el_f(item, static_url, CATEGORY_CONSUMABLES_ID){
     if (d.getDate() < 10) date = '0' + d.getDate()
     if (d.getMonth() < 10) month = '0' + d.getMonth()
     if (item.picture) {
-        picture = `<div><img src="${static_url}${item.picture}" alt="${static_url}${item.picture}" onerror="this.onerror=null;this.src='${static_url}images/No_product.png';"></img></div>`
+        picture = `<div><img src="${item.picture_url}" alt="{item.picture}"/></div>`
     } else {
         picture = `<div>
             <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-wrench" viewBox="0 0 16 16">

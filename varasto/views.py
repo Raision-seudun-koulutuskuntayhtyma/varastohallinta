@@ -261,14 +261,11 @@ def renter(request, idx):
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
-    static_url = settings.STATIC_URL
-
     context = {
         'rental_events': page_obj,
         'selected_user': selected_user,
         'idx': idx,
         'is_staff_user_has_permission_to_edit': is_staff_user_has_permission_to_edit,
-        'static_url': static_url
     }
     return render(request, 'varasto/renter.html', context)
 
@@ -442,8 +439,6 @@ def new_event(request):
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
-    static_url = settings.STATIC_URL
-
     context = {
         'changed_user': changed_user,
         'changed_items': changed_items,
@@ -451,7 +446,6 @@ def new_event(request):
         'estimated_date_issmall': estimated_date_issmall,
         'items': page_obj,
         'feedback_status': feedback_status,
-        'static_url': static_url
     }
     return render(request, 'varasto/new_event.html', context)
 
@@ -574,12 +568,7 @@ def getProduct2(request):
                 & Q(Q(id__in=rental_events.filter(item__amount=0).values('item_id')) & Q(id__in=rental_events.filter(item__amount_x_contents=0).values('item_id')))
                 ), then=rental_events.filter(item_id=OuterRef('id'))[:1].values('estimated_date')),
             When(Q(id__in=new_goods), then=None),
-            default=None)).values('id', 
-                'ean','storage__name', 'storage_place', 'cat_name', 'item_name', 'brand', 
-                'model', 'item_type', 'size', 'parameters', 'contents', 
-                'picture', 'item_description', 'cost_centre',
-                'purchase_data', 'purchase_price', 'purchase_place', 
-                'invoice_number', 'amount', 'unit__unit_name', 'amount_x_contents', 'is_possible_to_rent_field'))
+            default=None)))
             # in all links to other fields instead of id query gets names (storage__name, unit__unit_name)
 
     # ========================
@@ -602,8 +591,44 @@ def getProduct2(request):
     # FROM full_list ORDER BY id;
     # ============================
 
-    return JsonResponse({'goods_by_page': goods_by_page, 'page': page_number, 'num_pages': paginator.num_pages}, safe=False)
+    return JsonResponse({
+        'goods_by_page': [_get_good_data(x) for x in goods_by_page],
+        'page': page_number,
+        'num_pages': paginator.num_pages
+    }, safe=False)
 
+
+def _get_good_data(good):
+    data = {
+        'id': good.id,
+        'ean': good.ean,
+        'storage__name': good.storage.name if good.storage else None,
+        'storage_place': good.storage_place,
+        'cat_name': good.cat_name.id,
+        'item_name': good.item_name,
+        'brand': good.brand,
+        'model': good.model,
+        'item_type': good.item_type,
+        'size': good.size,
+        'parameters': good.parameters,
+        'contents': good.contents,
+        'picture': str(good.picture) if good.picture else "",
+        'picture_url': (
+            good.picture.url if good.picture else
+            f"{settings.STATIC_URL}/images/No_product.png"
+        ),
+        'item_description': good.item_description,
+        'cost_centre': good.cost_centre,
+        'purchase_data': good.purchase_data,
+        'purchase_price': good.purchase_price,
+        'purchase_place': good.purchase_place,
+        'invoice_number': good.invoice_number,
+        'amount': good.amount,
+        'unit__unit_name': good.unit.unit_name if good.unit else None,
+        'amount_x_contents': good.amount_x_contents,
+        'is_possible_to_rent_field': good.is_possible_to_rent_field,
+    }
+    return data
 
 
 # FUNC getProducts
@@ -622,7 +647,10 @@ def getProducts(request):
         for obj in page_obj:
             item = {
                 'id': obj.id,
-                'picture': settings.STATIC_URL + str(obj.picture) if obj.picture else '',
+                'picture': (
+                    obj.picture.url if obj.picture else
+                    f"{settings.STATIC_URL}/images/No_product.png"
+                ),
                 'item_name': obj.item_name if obj.item_name else '',
                 'brand': obj.brand if obj.brand else '',
                 'model': obj.model if obj.model else '',
@@ -641,7 +669,6 @@ def getProducts(request):
                 'unit': obj.unit.unit_name if obj.unit else '',
             }
             data.append(item)
-            # print(settings.STATIC_URL + str(obj.picture))
     return JsonResponse({'items': data, })
 
 
@@ -1007,12 +1034,9 @@ def products(request):
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
-    static_url = settings.STATIC_URL
-
     context = {
         'items': page_obj,
         'is_show_all': is_show_all,
-        'static_url': static_url,
         'search_text': search_text
     }
     return render(request, 'varasto/products.html', context)

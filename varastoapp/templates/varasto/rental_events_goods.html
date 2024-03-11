@@ -104,7 +104,7 @@ $(document).ready(function() {
                     {% if event.item.picture %}
                     <div>
                         <a href="{% url 'product' event.item_id %}">
-                            <img src="{% static event.item.picture %}" alt="{{event.item.picture}}">
+                            <img src="{{event.item.picture.url}}" alt="{{event.item.picture}}">
                         </a>
                     </div>
                     {% else %}

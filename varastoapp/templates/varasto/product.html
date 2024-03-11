@@ -26,7 +26,7 @@
                 <div>
                     {% if selected_item.picture %}
                     <div>
-                        <img src="{% static selected_item.picture %}" alt="{{selected_item.picture}}" onerror="this.onerror=null;this.src='{% static 'images/No_product_b.png' %}'; this.style.opacity='95%'">
+                        <img src="{{selected_item.picture.url}}" alt="{{selected_item.picture}}" onerror="this.onerror=null;this.src='{% static 'images/No_product_b.png' %}'; this.style.opacity='95%'">
                     </div>
                     {% else %}
                     <div>
@@ -183,7 +183,7 @@
                 <div class="history_photo">
                     <div>
                         {% if rental_event.renter.photo %}
-                        <img src="{% static rental_event.renter.photo %}" alt="{{rental_event.renter.photo}}">
+                        <img src="{{rental_event.renter.photo.url}}" alt="{{rental_event.renter.photo}}">
                         {% else %}
                         <img src="{% static 'images/no_person_photo.png' %}" alt="no_person_photo.png">
                         {% endif %}

@@ -59,9 +59,7 @@ $(document).ready(function() {
         })
         
         function printElements(element){
-            static_url = '{{static_url}}'
-            // console.log(list_el_f(element, static_url))
-            $('.products_content').append(list_el_f(element, static_url, '{{CATEGORY_CONSUMABLES_ID}}'))
+            $('.products_content').append(list_el_f(element, '{{CATEGORY_CONSUMABLES_ID}}'))
         }
     }
 

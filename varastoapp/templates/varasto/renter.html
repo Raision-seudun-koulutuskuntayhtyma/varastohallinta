@@ -36,7 +36,7 @@
                 <!-- <div><img src="{% static 'varasto/pics/people/portrait-800.jpg' %}" alt="portrait.jpg"></div> -->
                 <div>
                     {% if selected_user.photo %}
-                    <img src="{% static selected_user.photo %}" alt="{{selected_user.photo}}">
+                    <img src="{{selected_user.photo.url}}" alt="{{selected_user.photo}}">
                     {% else %}
                     <img src="{% static 'images/no_person_photo.png' %}" alt="no_person_photo.png">
                     {% endif %}
@@ -105,7 +105,7 @@
                     {% if rental_event.item.picture %}
                     <div>
                         <a href="{% url 'product' rental_event.item.id %}" class="nodecor">
-                            <img src="{% static rental_event.item.picture %}" alt="{{rental_event.item.picture}}" onerror="this.onerror=null;this.src='{% static 'images/No_product_b.png' %}'; this.style.opacity='95%'">
+                            <img src="{{rental_event.item.picture.url}}" alt="{{rental_event.item.picture}}" onerror="this.onerror=null;this.src='{% static 'images/No_product_b.png' %}'; this.style.opacity='95%'">
                         </a>
                     </div>
                     {% else %}

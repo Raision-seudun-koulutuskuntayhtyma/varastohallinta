@@ -90,7 +90,7 @@ $(document).ready(function() {
             <!-- <div><img src="{% static 'varasto/pics/people/janko-ferlic.jpg' %}" alt="janko-ferlic.jpg"></div> -->
             <div>
                 {% if usr.photo %}
-                <img src="{% static usr.photo %}" alt="usr.photo">
+                <img src="{{usr.photo.url}}" alt="usr.photo">
                 {% else %}
                 <img src="{% static 'images/no_person_photo.png' %}" alt="no_person_photo.png">
                 {% endif %}
