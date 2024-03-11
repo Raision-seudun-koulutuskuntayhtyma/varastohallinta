@@ -1,0 +1,10 @@
+#!/bin/sh
+# Päivittää koodin palvelimella Gitistä
+set -e
+ROOT_PATH=${ROOT_PATH:-/var/www/varasto}
+VENV_PATH=${VENV_PATH:-$ROOT_PATH/venv}
+CODE_PATH=${CODE_PATH:-$ROOT_PATH/code}
+. "$VENV_PATH/bin/activate"
+cd "$CODE_PATH"
+git pull --ff-only
+./post-update

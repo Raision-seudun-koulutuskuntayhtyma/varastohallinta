@@ -1,0 +1,8 @@
+#!/bin/sh
+# Ajetaan sen jälkeen kun koodi on päivitetty palvelimella.
+# Katso myös "update"-niminen skripti, joka ajaa tämän
+set -e
+pip install -r requirements.txt
+python -m compileall .
+./manage.py collectstatic --noinput
+./manage.py migrate --noinput
