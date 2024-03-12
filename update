@@ -4,7 +4,9 @@ set -e
 ROOT_PATH=${ROOT_PATH:-/var/www/varasto}
 VENV_PATH=${VENV_PATH:-$ROOT_PATH/venv}
 CODE_PATH=${CODE_PATH:-$ROOT_PATH/code}
+SERVICE_NAME=${SERVICE_NAME:-gunicorn-varasto.service}
 . "$VENV_PATH/bin/activate"
 cd "$CODE_PATH"
 git pull --ff-only
 ./post-update
+systemctl reload "$SERVICE_NAME"
