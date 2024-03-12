@@ -1,26 +1,19 @@
-import PIL.Image as Image
-import io
 import base64
-import uuid
-import pytz
-
-from .imagebin import byte_data
-from django.conf import settings
-from pathlib import Path
-
-from django.conf import settings
-from .storage_settings import *
-from .models import Settings_CustomUser, User, Goods, Storage_name, Storage_place, Rental_event, Staff_audit, CustomUser, Settings, Units
-from datetime import datetime, timedelta
-
-from email.message import EmailMessage
+import io
 import smtplib
+import time
+import uuid
+from datetime import datetime, timedelta
+from email.message import EmailMessage
+
+import pytz
+from barcode import Code128, EAN13
+from barcode.writer import ImageWriter
+from django.conf import settings
+from django.core.files.base import ContentFile
+
+from .models import Settings_CustomUser, Settings
 from .storage_settings import *
-
-import barcode
-from barcode import Code128, EAN13, generate
-from barcode.writer import ImageWriter, SVGWriter
-
 
 # ======================================================
 # EMAIL ALERT
@@ -49,37 +42,37 @@ def email_alert(subject, body, to):
 # ===========================================
 # FILE SAVE FUNCTION
 
-def _save_image(byte_data) -> str:
-    """Save picture to image/goods directory,
-    if generated filename does not exist
-    Return: Image filename
-    """
-    string_encode = bytes(str(byte_data), 'utf-8')
-    b = base64.b64decode(string_encode)
-    img = Image.open(io.BytesIO(b))
+mime_type_to_extension = {
+    "image/jpeg": "jpg",
+    "image/png": "png",
+}
 
-    while True:
-        # print('While loop')
-        new_filename = filename_generator()
-        is_file_exist = Path(new_filename['file_path']).is_file()
-        if not is_file_exist:
+def parse_image_from_data_url(data_url: str) -> ContentFile:
+    """
+    Parse an image from data URL to a ContentFile.
+
+    The data URL should have image data in jpeg or png format in the
+    standard base64 encoded form.  Returns a ContentFile object with a
+    randomly generated filename and the image content which is decoded
+    from the data URL.
+    """
+    base64_data: str = ""
+    ext: str = ""
+    for mime_type in mime_type_to_extension:
+        prefix = f"data:{mime_type};base64,"
+        if data_url.startswith(prefix):
+            base64_data = data_url[len(prefix):]
+            ext = mime_type_to_extension[mime_type]
             break
 
-    img.save(new_filename['file_path'])
+    if not base64_data:
+        data_url_prefix = data_url[:50] + "..."
+        raise ValueError(f"Unsupported data URL: {data_url_prefix!r}")
 
-    return new_filename['image_name']
+    data = base64.b64decode(base64_data)
+    filename = f"{int(time.time())}_{str(uuid.uuid4())[:8]}.{ext}"
+    return ContentFile(data, name=filename)
 
-def filename_generator() -> dict:
-    """ Generate file name with prefix <pr_> and extention <.png>
-    Return: dict
-        [file_path]: Path to product images folder
-        [image_name]: Filename
-    """
-    path = f'.{settings.STATIC_URL[:-1]}{settings.MEDIA_URL[:-1]}/goods/'
-    img_prefix = uuid.uuid4().hex
-    img_name = f'pr_{img_prefix}.png'
-    img_path_name = path+img_name
-    return {'file_path': img_path_name, 'image_name': img_name}
 
 # END FILE SAVE FUNCTION
 # ==============================================

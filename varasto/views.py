@@ -27,7 +27,7 @@ from .anna__views import report, new_event_goods, product_report, inventory, new
 from django.db.models import Q, CharField
 
 from .storage_settings import *
-from .services import _save_image
+from .services import parse_image_from_data_url
 from .services import *
 
 from django.conf import settings
@@ -819,7 +819,6 @@ def edit_item(request, idx):
     
     l = []
     error_massage = ''
-    camera_picture = request.POST.get('canvasData')
     get_item = Goods.objects.get(id=idx)
     unit = get_item.unit
     cat_name = get_item.cat_name
@@ -828,8 +827,6 @@ def edit_item(request, idx):
     amount = get_item.amount
     contents = get_item.contents
     old_image_path = get_item.picture.path if get_item.picture else ''
-
-    print('camera_picture', camera_picture)
 
     if request.method == "POST":
         new_cat = None
@@ -855,8 +852,9 @@ def edit_item(request, idx):
 
         if form.is_valid():
             item = form.save(commit=False)
+            camera_picture = request.POST.get('canvasData')
             if camera_picture:
-                item.picture = PRODUCT_IMG_PATH + _save_image(camera_picture)
+                item.picture = parse_image_from_data_url(camera_picture)
                 delete_old_picture(old_image_path)
             elif request.FILES:
                 try:
@@ -925,7 +923,6 @@ def edit_item(request, idx):
 def new_item(request):
     l = []
     error_massage = ''
-    camera_picture = request.POST.get('canvasData')
     
     if request.method == "POST":
         new_cat = None
@@ -945,8 +942,9 @@ def new_item(request):
         form = GoodsForm(request.POST, request.FILES)
         if form.is_valid():
             item = form.save(commit=False)
+            camera_picture = request.POST.get('canvasData')
             if camera_picture:
-                new_picture = PRODUCT_IMG_PATH + _save_image(camera_picture)
+                new_picture = parse_image_from_data_url(camera_picture)
             elif 'picture' in request.FILES:
                 new_picture = request.FILES['picture']
             else:

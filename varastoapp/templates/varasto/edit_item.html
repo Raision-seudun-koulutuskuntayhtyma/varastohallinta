@@ -82,16 +82,13 @@
             let preview = document.getElementById("preview_pic")
             const mycanvas = document.querySelector("#canvas")
             const ctx = canvas.getContext("2d")
-            let dataURI1 = mycanvas.toDataURL()
+            let dataURI1 = mycanvas.toDataURL("image/jpeg")
             preview.src = dataURI1
             preview.style.opacity = "1";
             preview.style.maxWidth = "333px";
             preview.style.height = "250px";
-            
-            let dataURI = mycanvas.toDataURL().replace(/^data:image\/png;base64/, "")
-            // console.log(dataURI)
 
-            $('#canvasData')[0].value = dataURI
+            $('#canvasData')[0].value = dataURI1;
         })
     })
 </script>
