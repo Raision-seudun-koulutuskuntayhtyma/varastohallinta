@@ -61,7 +61,6 @@ urlpatterns = [
 
     path('products/', views.products, name='products'),
     path('get_products/', views.getProducts, name='getProducts'),
-    path('get_photo/', views.get_photo, name='get_photo'),
     path('get_persons/', views.getPersons, name='getPersons'),
     path('get_product/', views.getProduct, name='getProduct'),
     path('get_product2/', views.getProduct2, name='getProduct2'),

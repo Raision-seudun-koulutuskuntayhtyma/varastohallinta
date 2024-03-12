@@ -801,15 +801,6 @@ def rental_events(request):
     return render(request, 'varasto/rental_events.html', context)
 
 
-
-# FUNC get_photo
-def get_photo(request):
-    picData = request.POST.get('picData')
-    img = _save_image(picData)
-    # print(img)
-    return HttpResponse("<html><body><h1>SAVED</h1></body></html>") 
-
-
 # FUNC edit_item
 @login_required()
 @user_passes_test(lambda user:user.is_storage_staff)
