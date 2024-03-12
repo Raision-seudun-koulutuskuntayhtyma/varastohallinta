@@ -1,16 +1,15 @@
 import base64
 import io
-import smtplib
 import time
 import uuid
 from datetime import datetime, timedelta
-from email.message import EmailMessage
 
 import pytz
 from barcode import Code128, EAN13
 from barcode.writer import ImageWriter
-from django.conf import settings
 from django.core.files.base import ContentFile
+from django.core.mail import send_mail
+from django.utils.html import strip_tags
 
 from .models import Settings_CustomUser, Settings
 from .storage_settings import *
@@ -18,22 +17,18 @@ from .storage_settings import *
 # ======================================================
 # EMAIL ALERT
 
-# https://betterdatascience.com/send-emails-with-python/
-# https://www.letscodemore.com/blog/smtplib-smtpauthenticationerror-username-and-password-not-accepted/
+# https://docs.djangoproject.com/en/4.2/topics/email/
 def email_alert(subject, body, to):
-    msg = EmailMessage()
-    msg.set_content(body, subtype='html')
-    msg['subject'] = subject
-
-    msg['from'] = STORAGE_EMAIL
-    msg['to'] = to
-
-    server = smtplib.SMTP(EMAIL_SERVER, 587)
-    server.starttls()
-    server.login(STORAGE_EMAIL, EMAIL_PASS)
-    server.send_message(msg)
-    server.quit()
-
+    if isinstance(to, str):
+        to = [to]
+    send_mail(
+        subject,
+        message=strip_tags(body.replace("<br>", "\n")),
+        html_message=body,
+        from_email=None,  # Use settings.DEFAULT_FROM_EMAIL
+        recipient_list=to,
+        fail_silently=False,
+    )
 
 # END EMAIL ALERT
 # ======================================================
