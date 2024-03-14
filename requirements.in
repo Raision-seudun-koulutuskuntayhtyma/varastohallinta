@@ -8,3 +8,4 @@ Markdown
 pillow
 psycopg2
 python-barcode
+rich

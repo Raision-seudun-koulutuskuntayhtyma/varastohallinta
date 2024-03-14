@@ -26,6 +26,9 @@ env = environ.Env(
     DEFAULT_FROM_EMAIL=(str, "varasto@localhost"),
     STATIC_ROOT=(str, BASE_DIR / "static"),
     MEDIA_ROOT=(str, BASE_DIR / "media"),
+    LOG_TO=(str, "console"),
+    LOG_LEVEL=(str, "INFO"),
+    LOG_LEVELS=(list, [f"django:INFO"]),
 )
 env.read_env(BASE_DIR / ".env")
 
@@ -142,5 +145,34 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'varasto.CustomUser'
 LOGIN_URL = '/login/'
 
+LOG_TO = env.str("LOG_TO")
+_default_log_level ="WARNING" if LOG_TO == "syslog" else "INFO"
+LOG_LEVEL = env.str("LOG_LEVEL", default=_default_log_level)
+LOG_LEVELS = env.list("LOG_LEVELS", default=[f"django:{LOG_LEVEL}"])
 
-# PRODUCT_IMG_PATH = 'images/goods/'
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "syslog-format": {
+            "format" : f"varastoapp[%(process)d]: (%(name)s) %(message)s",
+        },
+        "ymd": {"datefmt": "%Y-%m-%d %H:%M:%S"}
+    },
+    "handlers": {
+        "console": {"class": "rich.logging.RichHandler", "formatter": "ymd"},
+        "syslog": {
+            "class": "logging.handlers.SysLogHandler",
+            "formatter": "syslog-format",
+            "address": "/dev/log",
+        },
+    },
+    "root": {
+        "handlers": [LOG_TO],
+        "level": LOG_LEVEL,
+    },
+    "loggers": {
+        name: {"level": level}
+        for (name, level) in (item.rsplit(":", 1) for item in LOG_LEVELS)
+    },
+}
