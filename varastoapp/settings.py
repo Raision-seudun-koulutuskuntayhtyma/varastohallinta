@@ -148,14 +148,17 @@ LOGIN_URL = '/login/'
 LOG_TO = env.str("LOG_TO")
 _default_log_level ="WARNING" if LOG_TO == "syslog" else "INFO"
 LOG_LEVEL = env.str("LOG_LEVEL", default=_default_log_level)
-LOG_LEVELS = env.list("LOG_LEVELS", default=[f"django:{LOG_LEVEL}"])
+LOG_LEVELS = env.list("LOG_LEVELS", default=[
+    f"django:{LOG_LEVEL}",
+    f"django.request:{'INFO' if DEBUG else 'ERROR'}",
+])
 
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
     "formatters": {
         "syslog-format": {
-            "format" : f"varastoapp[%(process)d]: (%(name)s) %(message)s",
+            "format" : "varastoapp[%(process)d]: (%(name)s) %(message)s",
         },
         "ymd": {"datefmt": "%Y-%m-%d %H:%M:%S"}
     },
