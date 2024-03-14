@@ -1,0 +1,17 @@
+[Unit]
+Description=gunicorn daemon for %i
+Requires=gunicorn@%i.socket
+After=network.target
+
+[Service]
+Type=notify
+User=%i
+WorkingDirectory=/var/www/%i/code
+ExecStart=/var/www/%i/venv/bin/gunicorn wsgi
+ExecReload=/bin/kill -s HUP $MAINPID
+KillMode=mixed
+TimeoutStopSec=5
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target
