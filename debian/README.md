@@ -113,8 +113,8 @@ oikeaan osoitteeseen komennoissa ja tiedostoissa.
 
         cd /var/www/varasto
         mkdir media
-        chown root:www-data media
-        chmod u=rwx,g=rwxs,o= media
+        chown varasto:www-data media
+        chmod u=rwx,g=rxs,o= media
 
 13. Luodaan systemd-käynnistystiedostot gunicornille
 
