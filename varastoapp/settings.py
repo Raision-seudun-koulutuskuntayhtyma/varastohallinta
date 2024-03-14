@@ -146,8 +146,7 @@ AUTH_USER_MODEL = 'varasto.CustomUser'
 LOGIN_URL = '/login/'
 
 LOG_TO = env.str("LOG_TO")
-_default_log_level ="WARNING" if LOG_TO == "syslog" else "INFO"
-LOG_LEVEL = env.str("LOG_LEVEL", default=_default_log_level)
+LOG_LEVEL = env.str("LOG_LEVEL", default=("INFO" if DEBUG else "WARNING"))
 LOG_LEVELS = env.list("LOG_LEVELS", default=[
     f"django:{LOG_LEVEL}",
     f"django.request:{'INFO' if DEBUG else 'ERROR'}",
