@@ -1,6 +1,0 @@
-#!/bin/sh
-# Ajetaan sen jälkeen kun koodi on päivitetty palvelimella.
-# Katso myös "update"-niminen skripti, joka ajaa tämän
-set -e
-./manage.py collectstatic --noinput
-./manage.py migrate --noinput

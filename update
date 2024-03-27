@@ -5,10 +5,12 @@ ROOT_PATH=${ROOT_PATH:-/var/www/varasto}
 VENV_PATH=${VENV_PATH:-$ROOT_PATH/venv}
 CODE_PATH=${CODE_PATH:-$ROOT_PATH/code}
 SERVICE_NAME=${SERVICE_NAME:-gunicorn@varasto.service}
+DB_USER=${DB_USER:-varasto}
 . "$VENV_PATH/bin/activate"
 cd "$CODE_PATH"
 git pull --ff-only
 pip install -r requirements.txt
 python -m compileall -q .
-sudo --preserve-env=PATH -u varasto ./post-update
+./manage.py collectstatic --noinput
+sudo --preserve-env=PATH -u "$DB_USER" ./manage.py migrate --noinput
 systemctl reload "$SERVICE_NAME"
