@@ -8,5 +8,7 @@ SERVICE_NAME=${SERVICE_NAME:-gunicorn@varasto.service}
 . "$VENV_PATH/bin/activate"
 cd "$CODE_PATH"
 git pull --ff-only
-./post-update
+pip install -r requirements.txt
+python -m compileall -q .
+sudo --preserve-env=PATH -u varasto ./post-update
 systemctl reload "$SERVICE_NAME"
