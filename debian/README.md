@@ -96,9 +96,7 @@ oikeaan osoitteeseen komennoissa ja tiedostoissa.
     pieniä ja isoja kirjaimia sekä numeroita.
 
     `EMAIL_URL` määrittelee sähköpostin lähetykseen käytettävän palvelimen
-    osoitteen ja tunnuksen sinne.  Esimerkkejä muuttujan arvon muodosta
-    löytyy osoitteesta
-    https://github.com/migonzalvar/dj-email-url#smtp-backend
+    osoitteen ja tunnuksen sinne.
 
     `DEFAULT_FROM_EMAIL` määrittelee mitä sähköpostiosoitetta käytetään
     viestin From-kentässä, kun järjestelmä lähettää sähköpostia.
