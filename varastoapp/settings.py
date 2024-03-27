@@ -45,6 +45,8 @@ EMAIL_HOST = env.email("EMAIL_URL")["EMAIL_HOST"]
 EMAIL_PORT = env.email("EMAIL_URL")["EMAIL_PORT"]
 EMAIL_HOST_USER = env.email("EMAIL_URL")["EMAIL_HOST_USER"]
 EMAIL_HOST_PASSWORD = env.email("EMAIL_URL")["EMAIL_HOST_PASSWORD"]
+EMAIL_USE_TLS = env.email("EMAIL_URL").get("EMAIL_USE_TLS", False)
+EMAIL_USE_SSL = env.email("EMAIL_URL").get("EMAIL_USE_SSL", False)
 DEFAULT_FROM_EMAIL = env.str("DEFAULT_FROM_EMAIL")
 
 # Application definition

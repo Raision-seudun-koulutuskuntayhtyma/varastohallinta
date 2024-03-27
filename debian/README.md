@@ -88,7 +88,7 @@ oikeaan osoitteeseen komennoissa ja tiedostoissa.
         STATIC_ROOT=/var/www/varasto/static
         MEDIA_ROOT=/var/www/varasto/media
         DATABASE_URL=postgres:///varasto
-        EMAIL_URL=submission://tunnus:salasana@postipalvelin.example.com
+        EMAIL_URL=smtps://tunnus:salasana@postipalvelin.example.com:587
         DEFAULT_FROM_EMAIL=joku@varasto.example.org
 
     `SECRET_KEY` on Djangon käyttämä salausavain, jonka olisi hyvä olla
