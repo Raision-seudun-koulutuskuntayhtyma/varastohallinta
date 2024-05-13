@@ -7,23 +7,6 @@
 - JavaScript
 
 
-## Demo
-http://109.204.232.228:8880
-
-Student_ext: user3, Q2wertyy
-
-Management: user4, Q2wertyy
-
-Storage employee: user5, Q2wertyy
-
-Storage employee2: user25, Q2wertyy
-
-Storage employee3: user26, Q2wertyy
-
-Storage employee3: user27, Q2wertyy
-
-
-
 
 ## Main goals:
 1. Luo käyttäjä- ja järjestelmänvalvoja rooleja: hallinta, varastotyöntekijä, opettaja, opiskelija, edistynyt opiskelija ja järjestelmänvalvoja (superkäyttäjä)
